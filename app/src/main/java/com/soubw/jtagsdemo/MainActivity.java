@@ -31,9 +31,6 @@ public class MainActivity extends AppCompatActivity {
         JTagBean bean2 = new JTagBean(550,600,"衣服上的标志", JTagType.POLYLINE);
         bean2.setjPolyLineType(JPolyLineType.LEFT_TOP);
         jTagBeans.add(bean2);
-        JTagBean bean3 = new JTagBean(550,800,"衣服上的标志", JTagType.POLYLINE);
-        bean3.setjPolyLineType(JPolyLineType.RIGHT_TOP);
-        jTagBeans.add(bean2);
         jTagLayout.setJTags(jTagBeans);
         jTagLayout.setOnJTagsClickListener(new OnJTagClickListener() {
             @Override
