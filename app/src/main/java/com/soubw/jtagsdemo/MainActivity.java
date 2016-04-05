@@ -23,13 +23,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.jTagLayout = (JTagLayout) findViewById(R.id.jTagLayout);
         ArrayList<JTagBean> jTagBeans = new ArrayList<>();
-        jTagBeans.add(new JTagBean(30,380,"one-piece", JTagType.NONE));
+        jTagBeans.add(new JTagBean(60,720,"one-piece", JTagType.NONE));
 
-        JTagBean bean1 = new JTagBean(35,50,"拳头", JTagType.POLYLINE);
+        JTagBean bean1 = new JTagBean(80,80,"拳头", JTagType.POLYLINE);
         bean1.setjPolyLineType(JPolyLineType.RIGHT_BOTTOM);
         jTagBeans.add(bean1);
-        JTagBean bean2 = new JTagBean(300,200,"帽子", JTagType.POLYLINE);
+        JTagBean bean2 = new JTagBean(550,600,"衣服上的标志", JTagType.POLYLINE);
         bean2.setjPolyLineType(JPolyLineType.LEFT_TOP);
+        jTagBeans.add(bean2);
+        JTagBean bean3 = new JTagBean(550,800,"衣服上的标志", JTagType.POLYLINE);
+        bean3.setjPolyLineType(JPolyLineType.RIGHT_TOP);
         jTagBeans.add(bean2);
         jTagLayout.setJTags(jTagBeans);
         jTagLayout.setOnJTagsClickListener(new OnJTagClickListener() {

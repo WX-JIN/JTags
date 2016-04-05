@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 /**
  * Created by WX_JIN on 2016/4/2.
- * 添加标签的布局
  */
 public class JTagLayout extends RelativeLayout {
 
@@ -35,13 +34,13 @@ public class JTagLayout extends RelativeLayout {
 
     public JTagLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.setClipChildren(false);//是否限制子View在其范围内
+        this.setClipChildren(false);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public JTagLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.setClipChildren(false);//是否限制子View在其范围内
+        this.setClipChildren(false);
     }
 
     public synchronized void setJTags(ArrayList<JTagBean> jTagBeans){

@@ -18,7 +18,6 @@ import com.soubw.jtaglayout.R;
 
 /**
  * Created by WX_JIN on 2016/4/2.
- * 标签视图
  */
 public class JTag extends FrameLayout{
 
@@ -51,13 +50,13 @@ public class JTag extends FrameLayout{
 
     public JTag(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.setClipChildren(false);//是否限制子View在其范围内
+        this.setClipChildren(false);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public JTag(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.setClipChildren(false);//是否限制子View在其范围内
+        this.setClipChildren(false);
     }
 
     public void setJTagBean(JTagBean jTagBean){

@@ -8,7 +8,6 @@ import com.soubw.jtags.JTagType;
 
 /**
  * Created by WX_JIN on 2016/4/2.
- * 标签实体类
  */
 public class JTagBean {
 
