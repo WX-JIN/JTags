@@ -4,15 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
     <com.soubw.jtags.JTagLayout
         android:id="@+id/jTagLayout"
         android:background="@drawable/jtags_bg"
         android:layout_width="match_parent"
-        android:layout_height="400dp"/>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ff00ff">
-
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </LinearLayout>

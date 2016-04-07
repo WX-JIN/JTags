@@ -1,11 +1,19 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">#4876FF</item>
+
+        <item name="colorPrimaryDark">#3A5FCD</item>
+
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="searchViewStyle">@style/MySearchViewStyle</item>
+    </style>
+
+    <style name="AppTheme" parent="@style/AppBaseTheme"></style>
+
+    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
+
     </style>
 
 </resources>

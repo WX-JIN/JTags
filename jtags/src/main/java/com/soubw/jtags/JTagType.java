@@ -5,6 +5,7 @@ package com.soubw.jtags;
  */
 public enum JTagType {
     NONE,
+    CIRCLE,
     POLYLINE,
-    GUIDE,
+    BG,
 }

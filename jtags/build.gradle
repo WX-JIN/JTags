@@ -8,7 +8,7 @@ def gitUrl = 'https://github.com/WX-JIN/JTags.git'   //Git仓库的地址
 
 group = "com.soubw"//发布aar前缀根节点
 
-version = "0.0.1"//发布aar的库版本
+version = "0.0.2"//发布aar的库版本
 
 android {
     compileSdkVersion 23

@@ -13,8 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.soubw.bean.JTagBean;
 import com.soubw.jtaglayout.R;
+import com.soubw.jtags.bean.JTagBean;
 
 /**
  * Created by WX_JIN on 2016/4/2.
@@ -66,8 +66,10 @@ public class JTag extends FrameLayout{
 
     private void addJTag() {
         addContentView();
+        if(mJTagBean.getJTagType() == JTagType.NONE){
+            return;
+        }
         addPointView();
-
     }
 
     private void addPointView() {
@@ -97,14 +99,14 @@ public class JTag extends FrameLayout{
     }
 
     public void startAnim(){
-        if(mAnimatorSet.isRunning()){
+        if(mAnimatorSet == null || mAnimatorSet.isRunning()){
             return;
         }
         mAnimatorSet.start();
     }
 
     public void cancelAnim(){
-        if (!mAnimatorSet.isRunning()){
+        if (mAnimatorSet == null || !mAnimatorSet.isRunning()){
             return;
         }
         mAnimatorSet.cancel();
@@ -119,7 +121,11 @@ public class JTag extends FrameLayout{
         mContentView.setText(String.format("    %s    ",mJTagBean.getJTagContent()));
         MarginLayoutParams mlp = new MarginLayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
         mContentView.setGravity(Gravity.CENTER);
-        mContentView.setBackgroundResource(mJTagBean.getjTagBg());
+        try {
+            mContentView.setBackgroundResource(mJTagBean.getJTagBg());
+        }catch (Exception e){
+            mContentView.setBackgroundColor(mJTagBean.getJTagBg());
+        }
         mContentView.setTag(this);
         mContentView.measure(0, 0);
         mContentViewWidth = mContentView.getMeasuredWidth();
@@ -145,19 +151,14 @@ public class JTag extends FrameLayout{
     }
 
     public void reloadJTagPosition(){
-        mJPolyLine = new JPolyLine(this.getContext());
-        this.addView(mJPolyLine);
-        mJPolyLine.setPolyLine(mJTagBean);
-        MarginLayoutParams pointLp = (MarginLayoutParams) mPointView.getLayoutParams();
-        MarginLayoutParams polyLineLp = (MarginLayoutParams) mJPolyLine.getLayoutParams();
         MarginLayoutParams contentLp = (MarginLayoutParams) mContentView.getLayoutParams();
         int leftMargin = 0;
         int topMargin = 0;
-        switch (mJTagBean.getJtagType()){
-            case GUIDE:
+        switch (mJTagBean.getJTagType()){
+            case BG:
                 break;
-            case NONE:
-                leftMargin = 10;
+            case CIRCLE:
+                leftMargin = mContentViewHeight*1/3;
                 topMargin = mContentViewHeight*1/3;
                 break;
             case POLYLINE:
@@ -181,11 +182,29 @@ public class JTag extends FrameLayout{
                 }
                 break;
         }
-        pointLp.leftMargin = leftMargin;
-        pointLp.topMargin = topMargin;
-        polyLineLp.leftMargin = leftMargin;
-        polyLineLp.topMargin = topMargin;
+        if(mJTagBean.getJTagType() == JTagType.NONE){
+        }else {
+            mJPolyLine = new JPolyLine(this.getContext());
+            this.addView(mJPolyLine);
+            mJPolyLine.setPolyLine(mJTagBean);
+            MarginLayoutParams pointLp = (MarginLayoutParams) mPointView.getLayoutParams();
+            MarginLayoutParams polyLineLp = (MarginLayoutParams) mJPolyLine.getLayoutParams();
+            pointLp.leftMargin = leftMargin;
+            pointLp.topMargin = topMargin;
+            polyLineLp.leftMargin = leftMargin;
+            polyLineLp.topMargin = topMargin;
+        }
+
+
+
     }
 
+    public void hideJTag(){
+        this.setVisibility(View.INVISIBLE);
+    }
+
+    public void showJTag(){
+        this.setVisibility(View.VISIBLE);
+    }
 
 }

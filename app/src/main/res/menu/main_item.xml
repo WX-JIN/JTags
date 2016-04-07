@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item android:id="@+id/none"
+        android:title="标签功能"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/guide"
+        android:title="引导功能"
+        android:orderInCategory="80"
+        app:showAsAction="ifRoom" />
+    <item android:id="@+id/showJTags"
+        android:title="显示所有标签"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/hideJTags"
+        android:title="隐藏所有标签"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/addJTag"
+        android:title="添加一个标签"
+        android:orderInCategory="100"
+        app:showAsAction="never"/>
+</menu>

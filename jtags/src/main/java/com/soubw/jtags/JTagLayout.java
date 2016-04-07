@@ -8,7 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import com.soubw.bean.JTagBean;
+import com.soubw.jtags.bean.JTagBean;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,17 @@ public class JTagLayout extends RelativeLayout {
 
     private ArrayList<JTagBean> mJTagBeans;
     private ArrayList<JTag> mJTags;
-    private boolean isShowJTags = false;
+
+    private boolean isHaveBg = false;
 
     private AnimatorSet mAnimatorSet;
     private boolean isAnimRunning = false;
+
+    private OnJTagClickListener onJTagClickListener;
+
+    private View mBgView;
+
+    private int tempNextIndex = 0;
 
     public JTagLayout(Context context) {
         this(context,null);
@@ -43,57 +50,70 @@ public class JTagLayout extends RelativeLayout {
         this.setClipChildren(false);
     }
 
-    public synchronized void setJTags(ArrayList<JTagBean> jTagBeans){
+    public void setJTags(ArrayList<JTagBean> jTagBeans){
         this.mJTagBeans = jTagBeans;
         if (mJTags != null && mJTags.size() > 0){
             this.removeAllViews();
             mJTags.clear();
-            isShowJTags = false;
         }
-        addTags();
+        initTagLayout();
     }
 
-    public void setOnJTagsClickListener(final OnJTagClickListener onJTagClickListener){
-        OnClickListener onClickListener = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (onJTagClickListener != null){
-                    onJTagClickListener.onJTagClick((JTag) v.getTag());
-                }
-            }
-        };
-        for(int i=0;i < mJTags.size();i++){
-            JTag jTag = mJTags.get(i);
-            if(jTag.getContentView() != null){
-                jTag.getContentView().setOnClickListener(onClickListener);
-            }
-        }
-
-    }
-
-    private void addTags(){
+    public void addJTag(JTagBean bean){
         if(mAnimatorSet == null){
             mAnimatorSet = new AnimatorSet();
         }
-        int tagBeanCount = mJTagBeans.size();
+        if(mJTags == null){
+            mJTags = new ArrayList<>();
+        }else{
+            initJTag(bean);
+        }
+    }
+
+    private void initTagLayout(){
+        if(mAnimatorSet == null){
+            mAnimatorSet = new AnimatorSet();
+        }
         if(mJTags == null){
             mJTags = new ArrayList<>();
         }else{
             mJTags.clear();
         }
+        int tagBeanCount = mJTagBeans.size();
         for(int i = 0; i < tagBeanCount; i++){
-            JTagBean bean = mJTagBeans.get(i);
+            initJTag(mJTagBeans.get(i));
+        }
+        if(isHaveBg){
+            nextStep();
+        }
+    }
+
+    private synchronized void initJTag(JTagBean bean){
+        if(bean.getJTagType() == JTagType.BG){
+            if(mBgView == null){
+                mBgView = new View(getContext());
+                try {
+                    mBgView.setBackgroundResource(bean.getJTagBg());
+                }catch (Exception e){
+                    mBgView.setBackgroundColor(bean.getJTagBg());
+                }
+                this.addView(mBgView,new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT));
+                isHaveBg = true;
+        }
+        }else{
             JTag jTag = new JTag(getContext());
             mJTags.add(jTag);
             jTag.setJTagBean(bean);
             LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
             int leftMargin = bean.getJTagX();
             int topMargin = bean.getJTagY();
-            switch (bean.getJtagType()){
-                case GUIDE:
-                    break;
+            switch (bean.getJTagType()){
                 case NONE:
-                    leftMargin = bean.getJTagX() - 10;
+                    leftMargin = bean.getJTagX() - jTag.getContentViewWidth()*1/3;
+                    topMargin = bean.getJTagY() - jTag.getContentViewHeight()*1/3;
+                    break;
+                case CIRCLE:
+                    leftMargin = bean.getJTagX() - jTag.getContentViewWidth()*1/3;
                     topMargin = bean.getJTagY() - jTag.getContentViewHeight()*1/3;
                     break;
                 case POLYLINE:
@@ -120,10 +140,28 @@ public class JTagLayout extends RelativeLayout {
             lp.setMargins(leftMargin,topMargin,0,0);
             this.addView(jTag,lp);
             jTag.reloadJTagPosition();
+            if(jTag.getContentView() != null){
+                jTag.getContentView().setOnClickListener(onClickListener);
+            }
         }
-
     }
 
+    OnClickListener onClickListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (onJTagClickListener != null){
+                onJTagClickListener.onJTagClick((JTag) v.getTag());
+                if(isHaveBg){
+                    nextStep();
+                }
+            }
+        }
+    };
+
+    public void setOnJTagsClickListener(final OnJTagClickListener onJTagClickListener){
+        this.onJTagClickListener = onJTagClickListener;
+
+    }
 
     public void startAllAnim(){
         if(isAnimRunning){
@@ -145,6 +183,49 @@ public class JTagLayout extends RelativeLayout {
             jTag.cancelAnim();
         }
         isAnimRunning = false;
+    }
+
+    public void showAllJTags(){
+        for(int i=0;i < mJTags.size();i++){
+            JTag jTag = mJTags.get(i);
+            jTag.showJTag();
+        }
+    }
+
+    public void hideAllJTags(){
+        for(int i=0;i < mJTags.size();i++){
+            JTag jTag = mJTags.get(i);
+            jTag.hideJTag();
+        }
+    }
+
+    public void nextStep(){
+        if(mJTags == null || mJTags.isEmpty()){
+            return;
+        }
+        hideAllJTags();
+        if (tempNextIndex < mJTags.size()){
+            JTag jTag = mJTags.get(tempNextIndex);
+            jTag.showJTag();
+            tempNextIndex++;
+            return;
+        }else{
+            dismissGuide();
+        }
+    }
+
+    public void dismissGuide(){
+        if(mBgView != null){
+            this.removeView(mBgView);
+            mBgView = null;
+            isHaveBg =false;
+        }
+        if (mJTags != null && mJTags.size() > 0){
+            this.removeAllViews();
+            mJTags.clear();
+            mJTagBeans.clear();
+        }
+        tempNextIndex = 0;
     }
 
 }

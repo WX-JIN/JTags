@@ -1,4 +1,4 @@
-package com.soubw.bean;
+package com.soubw.jtags.bean;
 
 import android.graphics.Color;
 
@@ -17,24 +17,29 @@ public class JTagBean {
     private int jTagTextSize = 14;
     private String jTagContent;
     private int jTagBg = R.drawable.jtag_bg;
-    private JTagType jtagType = JTagType.NONE;
+    private JTagType jTagType = JTagType.CIRCLE;
     private JPolyLineType jPolyLineType = JPolyLineType.RIGHT_TOP;
 
-    public JTagBean(int jTagX, int jTagY, String jTagContent, JTagType jtagType) {
+    public JTagBean(JTagType jtagType, int jTagBg) {
+        this.jTagType = jtagType;
+        this.jTagBg = jTagBg;
+    }
+
+    public JTagBean(int jTagX, int jTagY, String jTagContent, JTagType jTagType) {
         this.jTagX = jTagX;
         this.jTagY = jTagY;
         this.jTagContent = jTagContent;
-        this.jtagType = jtagType;
+        this.jTagType = jTagType;
     }
 
-    public JTagBean(int jTagX, int jTagY, int jTagTextColor, int jTagTextSize, String jTagContent, int jTagBg, JTagType jtagType, JPolyLineType jPolyLineType) {
+    public JTagBean(int jTagX, int jTagY, int jTagTextColor, int jTagTextSize, String jTagContent, int jTagBg, JTagType jTagType, JPolyLineType jPolyLineType) {
         this.jTagX = jTagX;
         this.jTagY = jTagY;
         this.jTagTextColor = jTagTextColor;
         this.jTagTextSize = jTagTextSize;
         this.jTagContent = jTagContent;
         this.jTagBg = jTagBg;
-        this.jtagType = jtagType;
+        this.jTagType = jTagType;
         this.jPolyLineType = jPolyLineType;
     }
 
@@ -78,20 +83,20 @@ public class JTagBean {
         this.jTagContent = jTagContent;
     }
 
-    public int getjTagBg() {
+    public int getJTagBg() {
         return jTagBg;
     }
 
-    public void setjTagBg(int jTagBg) {
+    public void setJTagBg(int jTagBg) {
         this.jTagBg = jTagBg;
     }
 
-    public JTagType getJtagType() {
-        return jtagType;
+    public JTagType getJTagType() {
+        return jTagType;
     }
 
-    public void setJtagType(JTagType jtagType) {
-        this.jtagType = jtagType;
+    public void setJTagType(JTagType jTagType) {
+        this.jTagType = jTagType;
     }
 
     public JPolyLineType getjPolyLineType() {
