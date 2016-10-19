@@ -1,5 +1,5 @@
 # JTags
-#### &#160;&#160;&#160;&#160;JTags 可以展示自己要标明在APP页面任何位置的标签，也可以作为新手指导来提供用户说明，之后还有还会陆续添加一些相辅的功能，希望大家多多支持！ps：如果有什么bug或者优化点也可以向博主说下，留言或者加交流群：313870489。
+#### &#160;&#160;&#160;&#160;JTags 可以展示自己要标明在APP页面任何位置的标签，也可以作为新手指导来提供用户说明，之后还有还会陆续添加一些相辅的功能，希望大家多多支持！ps：如果有什么bug或者优化点也可以向博主说下，留言
 效果图如下（gif进行压缩效果变差了）：
 ![image](https://github.com/WX-JIN/JTags/blob/master/screenshots/4.gif)
 ![image](https://github.com/WX-JIN/JTags/blob/master/screenshots/5.gif)
@@ -124,4 +124,3 @@ private JPolyLineType jPolyLineType;//为折线类型，折线方位
 ----------
 欢迎关注我的博客：
 http://blog.csdn.net/wx_jin
-交流群：313870489
